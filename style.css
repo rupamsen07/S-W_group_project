@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #f5f7ff;
+    color: #333;
+}
+
+/* NAV BAR */
+nav {
+    background: #ff7eb6;
+    padding: 10px 25px; /* thinner */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+nav ul li {
+    cursor: pointer;
+    transition: 0.3s;
+}
+nav ul li:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #ffdf7e, #74d7ff, #ff9cee);
+    padding: 70px 20px;
+    text-align: center;
+    color: #222;
+}
+.hero h1 {
+    font-size: 2.7rem;
+    margin: 0;
+    animation: fadeIn 1.2s ease;
+}
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    opacity: 0.9;
+    animation: fadeInUp 1.5s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;} to {opacity: 1;}
+}
+@keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);}
+}
+
+/* BIG CARDS */
+.big-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.big-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.15);
+}
+
+/* AGE SELECT */
+.age-select {
+    padding: 20px 15px;
+}
+.age-select h2 {
+    margin-left: 10px;
+}
+.age-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 5px;
+}
+.age-card {
+    min-width: 120px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+.age-card:hover {
+    transform: scale(1.05);
+}
+
+/* SECTION */
+.section {
+    padding: 30px 20px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    nav ul {gap: 12px;}
+    .hero h1 {font-size: 2.3rem;}
+}
+
+@media (max-width: 768px) {
+    nav {font-size: 1rem; padding: 10px 18px;}
+    .hero h1 {font-size: 2rem;}
+    .hero p {font-size: 1rem;}
+    .big-card {font-size: 1.3rem; padding: 30px;}
+    .age-card {min-width: 100px;}
+}
+
+@media (max-width: 480px) {
+    nav {flex-direction: column; gap: 10px;}
+    .hero h1 {font-size: 1.7rem;}
+    .big-card {font-size: 1.1rem; padding: 25px;}
+}
