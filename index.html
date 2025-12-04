@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <nav>
     <div class="logo">ToyWorld</div>
     <ul>
@@ -18,33 +17,49 @@
   </nav>
 
   <section class="hero">
+    <div class="floating">🧸</div>
+    <div class="floating2">🎈</div>
+    <div class="floating3">🚗</div>
     <h1>Discover Joy Through Play</h1>
     <p>Top toys loved by kids and trusted by parents.</p>
   </section>
 
-  <section class="section">
-    <div class="big-card">Popular Among Boys</div>
-    <div class="big-card">Popular Among Girls</div>
+  <section class="section reveal">
+    <div class="big-card">👦 Popular Among Boys</div>
+    <div class="big-card">👧 Popular Among Girls</div>
   </section>
 
   <section class="age-select">
     <h2>Select by Age</h2>
     <div class="age-scroll">
-      <div class="age-card">Below 1</div>
-      <div class="age-card">1</div>
-      <div class="age-card">2</div>
-      <div class="age-card">3</div>
-      <div class="age-card">4 - 5</div>
-      <div class="age-card">6 - 8</div>
-      <div class="age-card">8 - 13</div>
-      <div class="age-card">13+</div>
+      <div class="age-card">🐣 Below 1</div>
+      <div class="age-card">🍼 1</div>
+      <div class="age-card">🎵 2</div>
+      <div class="age-card">🧩 3</div>
+      <div class="age-card">🎨 4 - 5</div>
+      <div class="age-card">🤖 6 - 8</div>
+      <div class="age-card">🚀 8 - 13</div>
+      <div class="age-card">⭐ 13+</div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="big-card">Hot Releases</div>
-    <div class="big-card">Popular Among Kids</div>
+  <section class="section reveal">
+    <div class="big-card">🔥 Hot Releases</div>
+    <div class="big-card">🌟 Popular Among Kids</div>
   </section>
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  function revealOnScroll(){
+    for(let r of reveals){
+      const rect = r.getBoundingClientRect();
+      if(rect.top < window.innerHeight - 50){
+        r.classList.add('visible');
+      }
+    }
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
 
 </body>
 </html>
