@@ -114,7 +114,7 @@ nav ul li:hover {
   max-width: 450px;
 
   background: linear-gradient(135deg, #ff7eb3, #ff758c);
-  padding: 40px 20px;
+  padding: 40px 5px;
   text-align: center;
   font-size: 1.6rem;
   border-radius: 20px;
@@ -126,6 +126,7 @@ nav ul li:hover {
   cursor: pointer;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -135,7 +136,10 @@ nav ul li:hover {
   transform: translateY(-8px) scale(1.03);
   box-shadow: 0 18px 40px rgba(255, 120, 150, 0.6);
 }
-
+.big-card>img{
+    width: 100%;
+    height: auto;
+}
 /* Alternate gradients for variety */
 .section .big-card:nth-child(2) {
   background: linear-gradient(135deg, #6a85ff, #5fd2ff);
