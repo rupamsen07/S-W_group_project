@@ -1,5 +1,3 @@
-// girls.js — same system as boys.js but with girls categories
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("form").forEach(f =>
     f.addEventListener("submit", e => e.preventDefault())
@@ -8,9 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initGirlsPage();
 });
 
-/* --------------------- Utilities ----------------------*/
-
-// AGE MAPPING — same as boys
 function normalizeAge(ageRaw) {
   if (!ageRaw) return null;
   const s = String(ageRaw).trim().toLowerCase();
@@ -29,8 +24,6 @@ function normalizeAge(ageRaw) {
   if (num <= 12) return "7-12";
   return "12+";
 }
-
-// PRICE BUCKETS — identical to boys
 function priceBucket(priceRaw) {
   const p = Number(priceRaw) || 0;
 
@@ -44,7 +37,6 @@ function safeLower(s) {
   return String(s || "").trim().toLowerCase();
 }
 
-// CATEGORY NORMALIZATION for girls
 function normalizeCategory(raw) {
   const s = safeLower(raw);
 
@@ -56,8 +48,6 @@ function normalizeCategory(raw) {
 
   return raw;
 }
-
-/* ---------------- Gather products ----------------*/
 async function gatherAllGirlProducts() {
   const articles = document.querySelectorAll("article.product-card");
 
@@ -90,7 +80,6 @@ async function gatherAllGirlProducts() {
   });
 }
 
-/* ---------------- Populate filters ----------------*/
 function autoPopulateGirlFilters(products) {
   const catSel = document.getElementById("g-filter-category");
   const ageSel = document.getElementById("g-filter-age");
@@ -110,7 +99,6 @@ function autoPopulateGirlFilters(products) {
   reset(ageSel, "All");
   reset(priceSel, "All");
 
-  // GIRL CATEGORY ORDER
   const categoryOrder = [
     "Dolls",
     "Soft Toys",
