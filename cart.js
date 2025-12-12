@@ -1,77 +1,83 @@
-// cart.js - render cart and wire quantity/remove
-document.addEventListener('DOMContentLoaded', () => {
-  const items = document.getElementById('cart-items');
-  const totalEl = document.getElementById('cart-total');
-  const emptyEl = document.getElementById('cart-empty');
-  const checkout = document.getElementById('checkout');
+document.addEventListener("DOMContentLoaded", () => {
+  renderCartPage();
+  document.getElementById("checkout-btn")?.addEventListener("click", onCheckout);
+});
 
-  function esc(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+function renderCartPage() {
+  const wrap = document.getElementById("cart-items");
+  const totalEl = document.getElementById("cart-total");
+  const cart = getCart();
 
-  function render() {
-    const cart = getCart();
-    items.innerHTML = '';
-    if (!cart || cart.length === 0) {
-      emptyEl.style.display = 'block';
-      totalEl.textContent = '';
-      return;
-    }
-    emptyEl.style.display = 'none';
-    let total = 0;
-    cart.forEach(it => {
-      total += (it.price * (it.qty||1));
-      const row = document.createElement('div');
-      row.className = 'cart-row';
-      row.innerHTML = `
-        <div class="cart-img"><img src="${esc(it.img||'https://placehold.co/80x80?text=No')}" alt=""></div>
-        <div class="cart-name">${esc(it.name)}</div>
-        <div class="cart-qty">
-          <button class="qty-btn dec" data-id="${it.id}">-</button>
-          <div class="qty-num">${it.qty}</div>
-          <button class="qty-btn inc" data-id="${it.id}">+</button>
-        </div>
-        <div class="cart-price">$${(it.price * it.qty).toFixed(2)}</div>
-        <button class="remove-btn" data-id="${it.id}">Remove</button>
-      `;
-      items.appendChild(row);
-    });
-    totalEl.textContent = `Total: $${total.toFixed(2)}`;
-
-    // wire
-    items.querySelectorAll('.inc').forEach(btn => btn.addEventListener('click', ()=> changeQty(parseInt(btn.dataset.id), +1)));
-    items.querySelectorAll('.dec').forEach(btn => btn.addEventListener('click', ()=> changeQty(parseInt(btn.dataset.id), -1)));
-    items.querySelectorAll('.remove-btn').forEach(btn => btn.addEventListener('click', ()=> removeItem(parseInt(btn.dataset.id))));
+  wrap.innerHTML = "";
+  if (cart.length === 0) {
+    wrap.innerHTML = `<p>Your cart is empty</p>`;
+    totalEl.textContent = "$0.00";
+    return;
   }
 
-  function changeQty(id, delta) {
-    const cart = getCart();
-    const it = cart.find(i=>i.id===id);
-    if (!it) return;
-    it.qty = (it.qty||1) + delta;
-    if (it.qty <= 0) {
-      const row = document.querySelector(`.remove-btn[data-id="${id}"]`)?.closest('.cart-row');
-      if (row) { row.classList.add('removing'); setTimeout(()=> { const next = getCart().filter(i=>i.id!==id); saveCart(next); render(); }, 320); }
-      else { saveCart(cart.filter(i=>i.id!==id)); render(); }
-      return;
-    }
-    saveCart(cart);
-    // pulse price
-    const priceEl = document.querySelector(`.remove-btn[data-id="${id}"]`)?.closest('.cart-row')?.querySelector('.cart-price');
-    if (priceEl){ priceEl.classList.add('pulse'); setTimeout(()=> priceEl.classList.remove('pulse'), 420); }
-    render();
-  }
+  let total = 0;
 
-  function removeItem(id) {
-    const row = document.querySelector(`.remove-btn[data-id="${id}"]`)?.closest('.cart-row');
-    if (row) { row.classList.add('removing'); setTimeout(()=> { saveCart(getCart().filter(i=>i.id!==id)); render(); }, 320); }
-    else { saveCart(getCart().filter(i=>i.id!==id)); render(); }
-  }
+  cart.forEach(item => {
+    total += item.qty * item.price;
 
-  checkout.addEventListener('click', ()=> {
-    const cart = getCart();
-    if (!cart || cart.length===0) { alert('Cart empty'); return; }
-    alert('Demo checkout complete — thank you!');
-    saveCart([]); render();
+    const row = document.createElement("div");
+    row.className = "cart-row";
+    row.innerHTML = `
+      <div class="cart-img"><img src="${item.img}" /></div>
+      <div class="cart-title">${item.title}</div>
+
+      <div class="cart-qty">
+        <button class="dec" data-id="${item.id}">-</button>
+        <span>${item.qty}</span>
+        <button class="inc" data-id="${item.id}">+</button>
+      </div>
+
+      <div class="cart-price">$${(item.price * item.qty).toFixed(2)}</div>
+      <button class="remove" data-id="${item.id}">Remove</button>
+    `;
+
+    wrap.appendChild(row);
   });
 
-  render();
-});
+  totalEl.textContent = "$" + total.toFixed(2);
+
+  wrap.querySelectorAll(".inc").forEach(b =>
+    b.addEventListener("click", () => changeQty(b.dataset.id, 1))
+  );
+  wrap.querySelectorAll(".dec").forEach(b =>
+    b.addEventListener("click", () => changeQty(b.dataset.id, -1))
+  );
+  wrap.querySelectorAll(".remove").forEach(b =>
+    b.addEventListener("click", () => removeItem(b.dataset.id))
+  );
+}
+
+function changeQty(id, delta) {
+  const cart = getCart();
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  item.qty += delta;
+  if (item.qty <= 0) {
+    saveCart(cart.filter(i => i.id !== id));
+  } else {
+    saveCart(cart);
+  }
+
+  renderCartPage();
+}
+
+function removeItem(id) {
+  saveCart(getCart().filter(i => i.id !== id));
+  renderCartPage();
+}
+
+function onCheckout() {
+  if (getCart().length === 0) {
+    alert("Cart empty");
+    return;
+  }
+  alert("Checkout complete");
+  saveCart([]);
+  renderCartPage();
+}

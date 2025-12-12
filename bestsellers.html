@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bestsellers</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-left">
+      <a href="index.html" class="logo">ToyStore</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="boys_section/boys.html">Boys</a>
+      <a href="girls_section/girls.html">Girls</a>
+      <a href="cart.html">Cart 🛒(<span id="cart-count">0</span>)</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>Bestsellers</h1>
+
+    <section class="special-grid" id="best-list"></section>
+
+    <div class="see-all-box">
+      <a href="boys_section/boys.html">See All Boys</a>
+      <a href="girls_section/girls.html">See All Girls</a>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script src="special-loader.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      updateCartCountUI();
+      loadSpecialPage("best", "best-list");
+    });
+  </script>
+
+</body>
+</html>

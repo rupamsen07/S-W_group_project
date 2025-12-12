@@ -1,82 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ToyWorld — Premium (Dark)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ToyWorld — Home</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- NAVBAR (same in all pages) -->
-  <nav>
-    <div class="logo">ToyWorld</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="boys_section/boys.html">Boys</a></li>
-      <li><a href="girls_section/girls.html">Girls</a></li>
-      <li><a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-inner">
-      <h1 class="hero-title">Premium toys. Curated play.</h1>
-      <p class="hero-sub">Discover adventure-ready toys, handpicked for every age. Fast shipping • Secure checkout</p>
-
-      <div class="ctas">
-        <a class="btn btn-accent" href="boys_section/boys.html">Shop Boys</a>
-        <a class="btn btn-ghost" href="girls_section/girls.html">Shop Girls</a>
-      </div>
-
-      <div class="hero-features">
-        <div class="hf">
-          <strong>Quality first</strong>
-          <p>Premium tested products</p>
-        </div>
-        <div class="hf">
-          <strong>Fast shipping</strong>
-          <p>Next-day options</p>
-        </div>
-        <div class="hf">
-          <strong>Secure pay</strong>
-          <p>Trusted checkout</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="visual-card">
-        <div class="badge">New</div>
-        <img src="media/hero.png" alt="Featured toy">
-      </div>
+  <!-- NAVBAR (same on all pages) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><a href="index.html">ToyWorld</a></div>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="boys_section/boys.html">Boys</a>
+        <a href="girls_section/girls.html">Girls</a>
+        <a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a>
+      </nav>
     </div>
   </header>
 
-  <!-- FEATURED & NEW ARRIVALS -->
-  <section class="featured">
-    <h2>Featured picks</h2>
-    <div class="grid" id="home-featured">
-      <a class="fp card" href="boys_section/boys.html">
-        <div class="fp-img"></div>
-        <div class="fp-body"><strong>Adventure Figures</strong><span>Action & play</span></div>
-      </a>
-      <a class="fp card" href="girls_section/girls.html">
-        <div class="fp-img"></div>
-        <div class="fp-body"><strong>Creative Sets</strong><span>STEM & crafts</span></div>
-      </a>
-      <a class="fp card" href="boys_section/boys.html">
-        <div class="fp-img"></div>
-        <div class="fp-body"><strong>RC & Vehicles</strong><span>High speed</span></div>
-      </a>
+  <!-- HERO -->
+  <section class="hero container">
+    <div class="hero-left">
+      <h1>Play. Learn. Grow.</h1>
+      <p class="lead">Handpicked toys for curious kids — safe, fun and colourful.</p>
+      <ul class="hero-features">
+        <li>🚚 Fast Delivery</li>
+        <li>🛡 Safe Materials</li>
+        <li>🔁 Easy Returns</li>
+      </ul>
+    </div>
+
+    <div class="hero-right">
+      <!-- fixed area: 55% area handled by CSS (hero-right width) -->
+      <div id="slideshow-box" class="slideshow-box" aria-hidden="false">
+        <img id="slideshow-img" class="slideshow-img" alt="floating toy">
+      </div>
     </div>
   </section>
 
+  <main class="container main-content">
+
+    <section class="category-row">
+      <a class="cat-card" href="boys_section/boys.html">
+        <div class="cat-media"><img src="https://placehold.co/800x520/e6f7ff/114b5f?text=Boys+Preview" alt=""></div>
+        <div class="cat-body"><h3>Recommended for Boys</h3></div>
+      </a>
+
+      <a class="cat-card" href="girls_section/girls.html">
+        <div class="cat-media"><img src="https://placehold.co/800x520/fff1f6/7b0b5e?text=Girls+Preview" alt=""></div>
+        <div class="cat-body"><h3>Recommended for Girls</h3></div>
+      </a>
+    </section>
+
+    <!-- Home special sections: each uses .scroll-wrapper with left/right buttons -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2>New Arrivals</h2><a class="section-link" href="new.html">See all</a>
+      </div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn left" aria-label="scroll left" style="display:none">‹</button>
+        <div id="new-container" class="product-grid"></div>
+        <button class="scroll-btn right" aria-label="scroll right" style="display:none">›</button>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Best Sellers</h2><a class="section-link" href="bestsellers.html">See all</a>
+      </div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn left" aria-label="scroll left" style="display:none">‹</button>
+        <div id="best-container" class="product-grid"></div>
+        <button class="scroll-btn right" aria-label="scroll right" style="display:none">›</button>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Popular Picks</h2><a class="section-link" href="popular.html">See all</a>
+      </div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn left" aria-label="scroll left" style="display:none">‹</button>
+        <div id="popular-container" class="product-grid"></div>
+        <button class="scroll-btn right" aria-label="scroll right" style="display:none">›</button>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Featured Picks</h2><a class="section-link" href="featured.html">See all</a>
+      </div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn left" aria-label="scroll left" style="display:none">‹</button>
+        <div id="featured-container" class="product-grid"></div>
+        <button class="scroll-btn right" aria-label="scroll right" style="display:none">›</button>
+      </div>
+    </section>
+
+  </main>
+
   <footer class="site-footer">
-    <p>© ToyWorld — premium toys, playful hearts.</p>
+    <div class="container">© ToyWorld</div>
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+    // hero slideshow images - place your PNGs here (transparent allowed)
+    document.addEventListener('DOMContentLoaded', () => {
+      initSlideshow({
+        images: [
+          "https://via.placeholder.com/600x600.png?text=Toy+1",
+          "https://via.placeholder.com/600x600.png?text=Toy+2",
+          "https://via.placeholder.com/600x600.png?text=Toy+3"
+        ],
+        holdMs: 2500,
+        transitionMs: 700
+      });
+
+      // load home sections (limits handled inside)
+      loadHomeSections({
+        newTarget: '#new-container',
+        bestTarget: '#best-container',
+        popularTarget: '#popular-container',
+        featuredTarget: '#featured-container'
+      });
+    });
+  </script>
 </body>
 </html>

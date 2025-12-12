@@ -1,32 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Cart — ToyWorld</title>
   <link rel="stylesheet" href="cart.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><a href="index.html">ToyWorld</a></div>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="boys_section/boys.html">Boys</a>
+        <a href="girls_section/girls.html">Girls</a>
+        <a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a>
+      </nav>
+    </div>
+  </header>
 
-  <nav>
-    <div class="logo">ToyWorld</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="boys_section/boys.html">Boys</a></li>
-      <li><a href="girls_section/girls.html">Girls</a></li>
-      <li><a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a></li>
-    </ul>
-  </nav>
-
-  <main class="cart-wrap">
+  <main class="container cart-wrap">
     <h1>Your Cart</h1>
-    <div id="cart-empty" class="empty">Your cart is empty.</div>
-    <div id="cart-items" class="items"></div>
-    <div id="cart-total" class="total"></div>
-
-    <div class="actions">
-      <a href="index.html" class="btn continue">Continue Shopping</a>
-      <button id="checkout" class="btn checkout">Checkout</button>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-summary">
+        <div class="summary-row"><div>Total:</div><div id="cart-total" class="cart-total">$0.00</div></div>
+      </div>
+      <div class="cart-actions"><a href="index.html" class="btn continue">Continue Shopping</a><button id="checkout-btn" class="btn checkout">Checkout</button></div>
     </div>
   </main>
 
