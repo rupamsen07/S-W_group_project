@@ -4,22 +4,19 @@
   --muted: #6b7280;
   --card: #ffffff;
   --radius: 14px;
-  --product-gap: 18px; /* Gap between cards */
+  --product-gap: 18px;
 }
 
-/* base reset */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; font-family: Inter, system-ui, Segoe UI, Roboto, Arial; background: linear-gradient(180deg, #f8fdff, #f3f9fb); color: #0f172a; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
 
-/* NAV */
 .site-header { background: var(--card); box-shadow: 0 1px 6px rgba(12, 20, 25, 0.04); position: sticky; top: 0; z-index: 80; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; }
 .brand a { font-weight: 800; color: var(--accent); text-decoration: none; font-size: 18px; }
 .main-nav { display: flex; gap: 18px; }
 .main-nav a { color: #0f172a; text-decoration: none; font-weight: 700; }
 
-/* HERO */
 .hero { display: flex; gap: 28px; align-items: center; padding: 40px 0; }
 .hero-left { flex: 0 0 45%; }
 .hero-right { flex: 0 0 55%; display: flex; align-items: center; justify-content: center; }
@@ -30,39 +27,31 @@ html, body { height: 100%; font-family: Inter, system-ui, Segoe UI, Roboto, Aria
 .btn { display: inline-block; padding: 10px 14px; border-radius: 12px; text-decoration: none; font-weight: 800; background: linear-gradient(90deg, #8be8ff, #66a6ff); color: #042; }
 .btn.ghost { background: transparent; border: 2px solid #e0f4f9; color: #042; }
 
-/* SLIDESHOW BOX */
 .slideshow-box { width: 100%; height: 420px; border-radius: 18px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(250, 250, 250, 0.6)); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(9, 30, 40, 0.04); }
 .slideshow-img { width: 100%; height: 100%; object-fit: contain; position: absolute; left: 0; top: 0; opacity: 0; transform: translateX(-40px); transition: transform .7s ease, opacity .7s ease; }
 
-/* category cards */
 .category-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-bottom: 34px; }
 .cat-card { background: var(--card); border-radius: 18px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 8px 30px rgba(9, 30, 40, 0.04); display: block; }
 .cat-media img { width: 100%; height: 220px; object-fit: cover; }
 .cat-body { padding: 18px; text-align: center; }
 
-/* sections */
 .section-block { padding: 28px 0; }
 .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .section-head h2 { font-size: 20px; margin: 0; }
 .section-link { color: var(--muted); font-weight: 700; text-decoration: none; }
 
-/* scroll wrapper & product grid */
 .scroll-wrapper { position: relative; }
 
-/* --- KEY FIX HERE --- */
 .product-grid { 
   display: flex; 
   gap: var(--product-gap); 
   overflow-x: auto; 
   padding-bottom: 8px; 
   scroll-behavior: smooth;
-  /* FORCE items to stay in one line, ignoring any JS added classes */
   flex-wrap: nowrap !important; 
-  /* Ensure the container doesn't try to fit content by expanding height */
   align-items: stretch;
 }
 
-/* We override the .h-grid class if your JS adds it, to ensure horizontal scroll persists */
 .product-grid.h-grid { 
   flex-wrap: nowrap !important; 
   overflow-x: auto !important;
@@ -73,23 +62,15 @@ html, body { height: 100%; font-family: Inter, system-ui, Segoe UI, Roboto, Aria
 .product-grid::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 8px; }
 .product-grid::-webkit-scrollbar-track { background: transparent; }
 
-/* scroll arrows */
 .scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; width: 36px; height: 36px; background: #fff; border-radius: 50%; border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, .12); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .scroll-btn.left { left: -18px; }
 .scroll-btn.right { right: -18px; }
 
-/* product card */
-/* --- WIDTH CALCULATION FIX --- */
 .product-card {
-  /* Formula: (100% space - 3 gaps) divided by 4 cards.
-     (100% - 54px) / 4 
-  */
   min-width: calc((100% - (3 * var(--product-gap))) / 4);
   max-width: calc((100% - (3 * var(--product-gap))) / 4);
   
-  /* Prevent the card from shrinking smaller than the calculated width */
   flex-shrink: 0; 
-  /* Prevent the card from growing larger */
   flex-grow: 0;
   
   background: var(--card);
@@ -108,10 +89,8 @@ html, body { height: 100%; font-family: Inter, system-ui, Segoe UI, Roboto, Aria
 .price { font-weight: 900; color: #ff5252; margin-bottom: 8px; }
 .add-to-cart-btn { background: var(--accent); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 800; }
 
-/* footer */
 .site-footer { padding: 24px 0; text-align: center; color: var(--muted); }
 
-/* responsive */
 @media (max-width: 1024px) { 
   .hero { flex-direction: column; } 
   .hero-left { flex: 1; } 
@@ -121,7 +100,6 @@ html, body { height: 100%; font-family: Inter, system-ui, Segoe UI, Roboto, Aria
 
 @media (max-width: 640px) {
   .hero-left h1 { font-size: 28px; }
-  /* On mobile, show 2 cards instead of 4 */
   .product-card {
      min-width: calc((100% - var(--product-gap)) / 2);
      max-width: calc((100% - var(--product-gap)) / 2);
