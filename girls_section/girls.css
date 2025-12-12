@@ -19,7 +19,7 @@ body {
 .main-nav a { color: #0f172a; text-decoration: none; font-weight: 700; }
 
 /* Layout: Sidebar + Grid */
-.boys-wrapper {
+.girls-wrapper {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 30px;
@@ -165,7 +165,7 @@ article{
 
 /* Responsive adjustments */
 @media(max-width: 900px) {
-  .boys-wrapper {
+  .girls-wrapper {
     grid-template-columns: 1fr;
   }
   .filter-sidebar {
