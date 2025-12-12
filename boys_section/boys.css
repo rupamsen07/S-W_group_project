@@ -58,6 +58,10 @@ body {
 /* =========================================
    PRODUCT CARD & IMAGE FIX
    ========================================= */
+article{
+   display: flex;
+   width: 350px;
+}
 .product-card {
   display: flex;
   flex-direction: column;
