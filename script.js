@@ -1,10 +1,15 @@
+/* script.js - global logic */
+
+// ---------- CONFIG ----------
 const CART_KEY = 'toyworld_cart_v4';
 const PAGES_TO_FETCH = ['boys_section/boys.html','girls_section/girls.html'];
 
+// ---------- CART HELPERS ----------
 function getCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || []; }catch(e){ return []; } }
 function saveCart(cart){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateCartCountUI(); }
 function updateCartCountUI(){ const el = document.getElementById('cart-count'); if(!el) return; const total = getCart().reduce((s,i)=> s + (i.qty || 1),0); el.textContent = total; }
 
+// merge quantities (Option A)
 function addToCart(product){
   if(!product || !product.id) return;
   const cart = getCart();
@@ -16,6 +21,7 @@ function addToCart(product){
   if(product.img) flyToCart(product.img);
 }
 
+// ---------- TOAST ----------
 function showToast(msg, ms=1000){
   let t = document.getElementById('global-toast'); if(t) t.remove();
   t = document.createElement('div'); t.id='global-toast'; t.textContent = msg;
@@ -24,6 +30,7 @@ function showToast(msg, ms=1000){
   setTimeout(()=> t.remove(), ms);
 }
 
+// ---------- FLY-TO-CART ANIM ----------
 function flyToCart(imgSrc){
   const cartEl = document.querySelector('.cart-link') || document.querySelector('#cart-count');
   if(!cartEl) return;
@@ -39,8 +46,11 @@ function flyToCart(imgSrc){
     clone.style.opacity = '0.9';
   });
   setTimeout(()=> clone.remove(),760);
+  // badge pop
   const badge = document.querySelector('#cart-count'); if(badge) badge.animate([{transform:'scale(1)'},{transform:'scale(1.2)'},{transform:'scale(1)'}],{duration:300});
 }
+
+// ---------- FETCH & PARSE PRODUCTS ----------
 async function fetchPageHTML(url){
   try{
     const res = await fetch(url,{cache:'no-store'});
@@ -79,6 +89,7 @@ async function gatherAllProducts(){
   return all;
 }
 
+// ---------- RENDER HELPERS ----------
 function renderCardHTML(product){
   const priceText = product.price !== undefined ? `$${Number(product.price).toFixed(2)}` : '';
   return `<article class="product-card" data-id="${escapeHtml(product.id)}" data-category="${escapeHtml(product.category)}" data-age="${escapeHtml(product.age)}" data-price="${escapeHtml(String(product.price))}" ${product.isNew ? 'data-new="true"':''} ${product.featured ? 'data-featured="true"':''} ${product.popular ? 'data-popular="true"':''} ${product.best ? 'data-best="true"':''}>
@@ -99,6 +110,7 @@ function renderHTMLInto(container, htmlList){
   if(htmlList.length === 0){ container.innerHTML = '<p>No items</p>'; return; }
   const wrapper = container.closest('.scroll-wrapper');
   if(htmlList.length > 4 && wrapper){
+    // horizontal display with limit 4 on homepage
     container.classList.remove('h-grid');
     container.classList.add('h-scroll');
     const limited = htmlList.slice(0,4);
@@ -109,6 +121,7 @@ function renderHTMLInto(container, htmlList){
     if(rightBtn) rightBtn.style.display = 'flex';
     enableScrollControls(container,leftBtn,rightBtn);
   } else {
+    // grid display (all)
     container.classList.remove('h-scroll');
     container.classList.add('h-grid');
     container.innerHTML = htmlList.join('');
@@ -117,6 +130,7 @@ function renderHTMLInto(container, htmlList){
     if(leftBtn) leftBtn.style.display = 'none';
     if(rightBtn) rightBtn.style.display = 'none';
   }
+  // wireAddButtons(container);
 }
 
 // function wireAddButtons(root=document){
@@ -139,6 +153,7 @@ function renderHTMLInto(container, htmlList){
 //   addToCart(prod);
 // }
 
+// ---------- HORIZONTAL SCROLL CONTROLS ----------
 function enableScrollControls(container,leftBtn,rightBtn){
   if(!container) return;
   const card = container.querySelector('.product-card');
@@ -146,6 +161,7 @@ function enableScrollControls(container,leftBtn,rightBtn){
   setTimeout(()=>{ const f = container.querySelector('.product-card'); if(f) cardWidth = Math.round(f.getBoundingClientRect().width); },120);
   if(leftBtn) leftBtn.onclick = ()=> container.scrollBy({left: -(cardWidth + 18), behavior:'smooth'});
   if(rightBtn) rightBtn.onclick = ()=> container.scrollBy({left: (cardWidth + 18), behavior:'smooth'});
+  // pointer drag
   let isDown=false, startX=0, scrollLeft=0;
   container.addEventListener('pointerdown', e=>{ isDown=true; startX=e.clientX; scrollLeft=container.scrollLeft; container.setPointerCapture && container.setPointerCapture(e.pointerId); });
   container.addEventListener('pointermove', e=>{ if(!isDown) return; const walk = (e.clientX - startX) * 1.4; container.scrollLeft = scrollLeft - walk; });
@@ -153,8 +169,10 @@ function enableScrollControls(container,leftBtn,rightBtn){
   container.addEventListener('pointercancel', ()=> isDown=false);
 }
 
+// ---------- HOME SECTION LOADER ----------
 async function loadHomeSections(targets){
   const all = await gatherAllProducts();
+  // build arrays
   const newList = all.filter(p=> p.isNew).map(renderCardHTML);
   const bestList = all.filter(p=> p.best).map(renderCardHTML);
   const popularList = all.filter(p=> p.popular).map(renderCardHTML);
@@ -164,6 +182,7 @@ async function loadHomeSections(targets){
   renderHTMLInto(document.querySelector(targets.popularTarget), popularList);
   renderHTMLInto(document.querySelector(targets.featuredTarget), featuredList);
 }
+// ---------- SPECIAL PAGE LOADER (injecting former special_loader.js but FIXED) ----------
 async function fetchProductsRaw(url) {
   const res = await fetch(url, { cache: "no-store" });
   const html = await res.text();
@@ -180,6 +199,7 @@ async function getAllRawArticles() {
 
 function cloneRawArticle(a) {
   const c = a.cloneNode(true);
+  // REMOVE any previously bound add handlers
   c.querySelectorAll(".add-to-cart").forEach(btn => {
     const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
@@ -187,7 +207,7 @@ function cloneRawArticle(a) {
   return c;
 }
 
-//type → "new", "best", "featured", "popular" //
+/** type → "new", "best", "featured", "popular" */
 async function loadSpecialPage(type, targetId) {
   const container = document.getElementById(targetId);
   if (!container) return;
@@ -199,9 +219,11 @@ async function loadSpecialPage(type, targetId) {
   container.innerHTML = "";
   filtered.forEach(p => container.appendChild(cloneRawArticle(p)));
 
+  // Use your global add-to-cart handler
 }
 
 
+// ---------- SLIDESHOW (slide-from-left -> center -> slide-right) ----------
 let __slideTimer = null;
 function initSlideshow({images=[], holdMs=2500, transitionMs=700} = {}){
   const imgEl = document.getElementById('slideshow-img');
@@ -213,10 +235,12 @@ function initSlideshow({images=[], holdMs=2500, transitionMs=700} = {}){
     imgEl.style.opacity = '0';
     imgEl.style.transform = `translateX(-40px)`;
     imgEl.src = src;
+    // allow reflow
     requestAnimationFrame(()=> {
       imgEl.style.transition = `transform ${transitionMs}ms ease, opacity ${transitionMs}ms ease`;
       imgEl.style.opacity = '1';
       imgEl.style.transform = `translateX(0)`;
+      // hold then exit
       setTimeout(()=> {
         imgEl.style.opacity = '0';
         imgEl.style.transform = `translateX(40px)`;
@@ -231,11 +255,14 @@ function initSlideshow({images=[], holdMs=2500, transitionMs=700} = {}){
   showNext();
 }
 
+// ---------- GLOBAL INIT ----------
 document.addEventListener('DOMContentLoaded', ()=> {
+  // delegated Add buttons (for any .add-btn like elements or .add-to-cart)
   document.addEventListener('click', (ev)=>{
     const btn = ev.target.closest('.add-to-cart, .add-btn, .add-to-cart-btn');
     if(!btn) return;
     ev.preventDefault();
+    // try parse product from closest article
     const article = btn.closest('article.product-card') || btn.closest('.product-card');
     if(article){
       const prod = {
@@ -246,6 +273,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       };
       addToCart(prod);
     } else {
+      // fallback: use data attributes on button
       const prod = { id: btn.dataset.id || btn.getAttribute('data-id'), title: btn.dataset.name || btn.getAttribute('data-name'), price: parseFloat(btn.dataset.price||0) || 0, img: btn.dataset.img || '' };
       if(prod.id) addToCart(prod);
       else console.warn('Cannot determine product for add-to-cart', btn);
