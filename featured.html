@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Featured Toys</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <nav class="site-nav">
-    <div class="nav-left">
-      <a href="index.html" class="logo">ToyStore</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><a href="index.html">ToyWorld</a></div>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="boys_section/boys.html">Boys</a>
+        <a href="girls_section/girls.html">Girls</a>
+        <a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a>
+      </nav>
     </div>
-    <div class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="boys_section/boys.html">Boys</a>
-      <a href="girls_section/girls.html">Girls</a>
-      <a href="cart.html">Cart 🛒(<span id="cart-count">0</span>)</a>
-    </div>
-  </nav>
+  </header>
 
   <main class="container">
-    <h1>Featured</h1>
+    <h1 style="margin-top: 30px; margin-bottom: 20px;">Featured Toys</h1>
 
-    <section class="special-grid" id="featured-list"></section>
+    <section class="special-grid product-grid h-grid" id="featured-list" style="flex-wrap: wrap; overflow: visible;">
+      </section>
 
-    <div class="see-all-box">
-      <a href="boys_section/boys.html">See All Boys</a>
-      <a href="girls_section/girls.html">See All Girls</a>
+    <div class="see-all-box" style="margin-top: 40px; text-align: center; display: flex; gap: 20px; justify-content: center;">
+      <a href="boys_section/boys.html" class="btn">See All Boys</a>
+      <a href="girls_section/girls.html" class="btn">See All Girls</a>
     </div>
   </main>
 
@@ -34,8 +36,15 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      updateCartCountUI();
-      loadSpecialPage("featured", "featured-list");
+      // Update cart count
+      if (typeof updateCartCountUI === "function") {
+        updateCartCountUI();
+      }
+      
+      // Load 'featured' items into the 'featured-list' container
+      if (typeof loadSpecialPage === "function") {
+        loadSpecialPage("featured", "featured-list");
+      }
     });
   </script>
 
