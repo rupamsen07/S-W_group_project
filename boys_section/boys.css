@@ -1,16 +1,10 @@
-/* Boys Section Page Overrides */
-
+/* =========================================
+   Container & Global Layout
+   ========================================= */
 body {
   background: #f0f5ff;
 }
 
-h1 {
-  text-align: center;
-  margin: 25px 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1e3a8a;
-}
 .container {
   width: 92%;
   max-width: 1200px;
@@ -18,69 +12,149 @@ h1 {
   padding-bottom: 40px;
 }
 
-/* Local boys product card styling */
+/* Layout: Sidebar + Grid */
+.boys-wrapper {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  padding: 28px 0;
+  align-items: start;
+}
+
+.products-section h1 {
+  text-align: left;
+  margin: 0 0 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+/* Sidebar Styling */
+.filter-sidebar {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 90px;
+}
+.filter-group { margin-bottom: 15px; }
+.filter-actions { display: flex; gap: 10px; margin-top: 15px; }
+
+/* =========================================
+   GRID LAYOUT FIX
+   ========================================= */
+.product-grid {
+  display: grid !important;
+  /* Columns will be equal width, roughly 240px wide */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  gap: 24px !important;
+  
+  /* Reset scroll properties from homepage */
+  overflow-x: visible !important;
+  flex-wrap: wrap !important;
+}
+
+/* =========================================
+   PRODUCT CARD & IMAGE FIX
+   ========================================= */
 .product-card {
   display: flex;
   flex-direction: column;
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 60, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 60, 255, 0.1);
   padding: 12px;
-  margin-bottom: 25px;
+  height: 100%; /* Stretches card to fill the grid row */
+  transition: transform 0.2s ease;
 }
-article{
-    height: 450px;
-    width: 350px;
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 60, 255, 0.2);
 }
-.card-media{
-  object-fit: cover;
+
+/* 1. The Image Container (Fixed Height Box) */
+.card-media {
+  width: 100%;
+  height: 220px; /* FIXED HEIGHT: All images get exactly 220px of space */
+  background: #fff; /* White background fills any empty space */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+/* 2. The Image Itself (No Cropping) */
+.card-media img {
+  width: 100%;
   height: 100%;
-  width: auto;
-  border-radius: 12px;
+  /* 'contain' = Show the WHOLE image inside the box. No cropping. */
+  object-fit: contain; 
+  padding: 5px; 
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-media img {
+  transform: scale(1.05);
+}
+
+/* Card Text Styling */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* This forces the button to the bottom */
 }
 
 .card-body h3 {
-  margin-top: 10px;
+  margin: 0 0 8px;
   font-size: 1.1rem;
   color: #1e3a8a;
+  line-height: 1.3;
 }
 
 .card-body .desc {
-  margin: 6px 0;
+  margin: 0 0 12px;
   font-size: 0.9rem;
-  color: #444;
+  color: #555;
+  flex-grow: 1; /* Pushes the price and button down */
 }
 
 .card-body .price {
   color: #0036c7;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
 .add-to-cart {
   background: #1e40af;
   border: none;
-  padding: 8px 0;
+  padding: 10px 0;
   width: 100%;
   color: white;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.25s;
+  margin-top: auto; /* Ensures button is aligned at the bottom */
+  transition: background 0.2s;
 }
 
 .add-to-cart:hover {
   background: #0f257a;
 }
 
-.add-to-cart:active {
-  transform: scale(0.95);
+/* Responsive adjustments */
+@media(max-width: 900px) {
+  .boys-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .filter-sidebar {
+    order: -1;
+    position: static;
+    margin-bottom: 20px;
+  }
 }
-/* minimal overrides */
-.boys-wrapper{display:grid;grid-template-columns: 280px 1fr;gap:20px;padding:28px 0}
-.filter-sidebar{background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
-.filter-group{margin-bottom:12px}
-.filter-actions{display:flex;gap:10px;margin-top:10px}
-.products-section h1{text-align:left;margin:0 0 12px}
-@media(max-width:900px){.boys-wrapper{grid-template-columns:1fr;}.filter-sidebar{order:2}}
