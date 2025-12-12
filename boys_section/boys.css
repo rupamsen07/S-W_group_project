@@ -69,8 +69,13 @@ article{
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0, 60, 255, 0.1);
   padding: 12px;
-  height: 100%; /* Stretches card to fill the grid row */
-   width: 350px;
+  height: 100%;
+  
+  /* --- FIX START --- */
+  width: 100%;            /* Change 350px to 100% */
+  box-sizing: border-box; /* Ensures padding doesn't break the width */
+  /* --- FIX END --- */
+
   transition: transform 0.2s ease;
 }
 
