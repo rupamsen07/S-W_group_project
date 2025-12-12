@@ -59,7 +59,7 @@ body {
    PRODUCT CARD & IMAGE FIX
    ========================================= */
 article{
-   display: flex;
+   display: inline-block;
    width: 350px;
 }
 .product-card {
