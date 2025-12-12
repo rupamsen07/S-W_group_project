@@ -4,7 +4,9 @@
 body {
   background: #f0f5ff;
 }
-
+header{
+   background-color: white;
+}
 .container {
   width: 92%;
   max-width: 1200px;
