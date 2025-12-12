@@ -10,8 +10,6 @@ body {
   max-width: 1200px;
   margin: auto;
   padding-bottom: 40px;
-}
-nav{
    background-color: white;
 }
 .site-header { background: var(--card); box-shadow: 0 1px 6px rgba(12, 20, 25, 0.04); position: sticky; top: 0; z-index: 80; }
